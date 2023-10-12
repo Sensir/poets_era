@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="height: 100%">
+<head>
+    <meta charset="utf-8">
+</head>
+<body style="height: 100%; margin: 0">
+<div id="container" style="height: 100%"></div>
+
+
+<script type="text/javascript" src="echarts.min.js"></script>
+<script type="text/javascript" src="data.js"></script>
+
+<script type="text/javascript">
+    var dom = document.getElementById('container');
+    var myChart = echarts.init(dom, null, {
+      renderer: 'svg',
+      useDirtyRect: true
+    });
+    var app = {};
+
+    var option;
+
+option = {
+  backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [
+    {
+      offset: 0,
+      color: '#f7f8fa'
+    },
+    {
+      offset: 1,
+      color: '#cdd0d5'
+    }
+  ]),
+  title: {
+    text: '唐宋诗人年代表',
+    txtAlign: 'center',
+    x: 'center',
+    y: '20px'
+  },
+  grid: {
+    left: '8%',
+    top: '10%'
+  },
+  xAxis: [
+    {
+    min: 450,
+    max: 1320,
+    type: 'value',
+    name: '公元',
+    position: 'top',
+    scale:true
+  },
+  {
+    min: 450,
+    max: 1320,
+    type: 'value',
+    name: '公元',
+    position: 'buttom',
+    scale:true
+  },
+  ],
+  yAxis: {
+    min: 0,
+    max: 255,
+    inverse: true,
+    type: 'value',
+    show: false,
+    scale: false
+  },
+  dataZoom: [
+    {
+      type: 'inside'
+    }
+  ],
+
+  series: [
+    {
+      name: '唐',
+      type: 'lines',
+      coordinateSystem: 'cartesian2d',
+      polyline: false,
+      lineStyle: {
+        width: 3
+      },
+      symbol: ['circle', 'diamond'],
+      symbolSize: 10,
+      label: {
+        show: true,
+         offset: [-8, 0],
+        // position: 'TopLeft',
+        formatter: function (params) {
+          return params.data['label'];
+        },
+        textStyle:{
+          fontWeight: 'bolder'
+        },
+        color: 'blue'
+      },
+      data: data[0]
+    },
+    {
+      name: '宋',
+      type: 'lines',
+      coordinateSystem: 'cartesian2d',
+      polyline: false,
+      lineStyle: {
+        width: 3
+      },
+      symbol: ['circle', 'diamond'],
+      symbolSize: 10,
+      label: {
+        show: true,
+        // position: 'TopLeft',
+        offset: [-8, 0],
+        formatter: function (params) {
+          return params.data['label'];
+        },
+        color: 'green',
+        textStyle:{
+          fontWeight: 'bolder',
+        }
+      },
+      data: data[1]
+    }
+  ]
+};
+
+
+    if (option && typeof option === 'object') {
+      myChart.setOption(option);
+    }
+
+    window.addEventListener('resize', myChart.resize);
+</script>
+</body>
+</html>
